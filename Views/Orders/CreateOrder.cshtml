@@ -1,0 +1,86 @@
+﻿@model assignmentt.ViewModel.OrderViewModel
+
+@{
+    ViewData["Title"] = "CreateOrder";
+}
+
+<h1>CreateOrder</h1>
+
+<h4>OrderViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateOrder">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CustomerID" class="control-label">Customer Name </label>
+                <select asp-for="CustomerID" class="form-control">
+                    @foreach (var customer in Model.Customers)
+                    {
+                        <option value="@customer.CustomerID">@customer.Name</option>
+                    }
+                </select>
+
+            </div>
+            <div class="form-group">
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                          
+                            <th>Product Name </th>
+                            <th>Unit Price </th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var product in Model.Products)
+                        {
+                            <tr>
+                                <td>@product.Name</td>
+                                <td>@product.Price</td>
+                                <td>
+                                    <input asp-for="Quantities" type="number" class="form-control" min="1" value="@Model.Quantities" />
+
+                                </td>
+                            </tr>
+                        }
+                       
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-group">
+                <label asp-for="OrderDate" class="control-label"></label>
+                <input asp-for="OrderDate" class="form-control" />
+                <span asp-validation-for="OrderDate" class="text-danger"></span>
+            </div>
+
+
+
+            @*   <div class="form-group">
+            <label asp-for="TotalAmount" class="control-label"></label>
+            <input asp-for="TotalAmount" class="form-control" />
+            <span asp-validation-for="TotalAmount" class="text-danger"></span>
+            </div> *@
+
+            @*  <div class="form-group">
+            <label asp-for="Quantities" class="control-label"></label>
+            <input asp-for="Quantities" class="form-control" />
+            <span asp-validation-for="Quantities" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

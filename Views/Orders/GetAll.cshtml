@@ -1,0 +1,61 @@
+﻿@model IEnumerable<assignmentt.ViewModel.OrderDetailsViewModel>
+
+@{
+    ViewData["Title"] = "GetAll";
+}
+
+<h1>GetAll</h1>
+
+<p>
+    <a asp-action="CreateOrder">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalAmount)
+            </th>
+           <th>
+                @Html.DisplayNameFor(model => model.Products)
+           </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerName)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalAmount)
+            </td>
+                <td>
+                    <ul>
+                        @foreach (var orderItem in item.OrderItems) 
+                        {
+                            <li>
+                                @orderItem.Product.Name - Quantity: @orderItem.Quantity,
+                                Price: @orderItem.Product.Price
+                            </li>
+                        }
+                    </ul>
+                </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.OrderID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.OrderID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.OrderID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
